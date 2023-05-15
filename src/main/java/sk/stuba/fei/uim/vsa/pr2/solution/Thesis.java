@@ -61,6 +61,8 @@ public class Thesis implements Serializable {
         DISSERTATION;
     }
 
+
+
     public static enum Status {
         FREE_TO_TAKE,
         IN_PROGRESS,

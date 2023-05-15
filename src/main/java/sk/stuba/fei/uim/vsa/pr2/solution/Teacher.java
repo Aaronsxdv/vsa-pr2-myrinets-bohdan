@@ -13,6 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TEACHER")
+@NamedQuery(
+        name = "findTeachersByEmailAndPassword",
+        query = "SELECT s FROM Teacher s WHERE s.email = :email AND s.password = :password"
+)
 @NamedQuery(name = Teacher.FIND_ALL_QUERY, query = "select t from Teacher t")
 public class Teacher implements Serializable {
     private static final long serialVersionUID = -3294165768183131788L;
@@ -34,7 +38,7 @@ public class Teacher implements Serializable {
 
     @OneToMany(mappedBy = "supervisor", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     private List<Thesis> supervisedTheses;
-
+    private String password;
     public Teacher() {
     }
 }

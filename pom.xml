@@ -17,12 +17,11 @@
 
     <developers>
         <developer>
-            <id>999999</id>
-            <name>Meno Študenta</name>
-            <email>xstudent@stuba.sk</email>
+            <id>105304</id>
+            <name>Bohdan Myrinets</name>
+            <email>xmyrinets@stuba.sk</email>
         </developer>
     </developers>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -44,6 +43,7 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>

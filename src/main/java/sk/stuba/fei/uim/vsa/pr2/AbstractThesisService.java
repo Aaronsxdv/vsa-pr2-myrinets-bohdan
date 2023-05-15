@@ -25,7 +25,7 @@ public abstract class AbstractThesisService<S, T, A> implements AutoCloseable {
     protected final EntityManagerFactory emf;
 
     public AbstractThesisService() {
-        this.emf = Persistence.createEntityManagerFactory("vsa-project-1");
+        this.emf = Persistence.createEntityManagerFactory("vsa-project-2");
     }
 
     @Override
@@ -43,7 +43,7 @@ public abstract class AbstractThesisService<S, T, A> implements AutoCloseable {
      * @param email Školský emailový kontakt.
      * @return Inštanciu entity študenta po vložení do databázy. V prípade chyby vráti null.
      */
-    public abstract S createStudent(Long aisId, String name, String email);
+    public abstract S createStudent(Long aisId, String name, String email, String password);
 
     /**
      * Získanie inštancie entity študenta podľa identifikátora entity.
@@ -90,7 +90,7 @@ public abstract class AbstractThesisService<S, T, A> implements AutoCloseable {
      * @param department Oddelenie pracoviska pedagóga na fakulte.
      * @return Novo vytvorenú inštanciu entity pedagóg. V prípade chyby vráti null.
      */
-    public abstract T createTeacher(Long aisId, String name, String email, String department);
+    public abstract T createTeacher(Long aisId, String name, String email, String department, String password);
 
     /**
      * Získanie inštancie entity pedagóga z databázy.

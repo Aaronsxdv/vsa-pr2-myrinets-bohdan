@@ -1,6 +1,7 @@
 package sk.stuba.fei.uim.vsa.pr2.solution;
 
 import sk.stuba.fei.uim.vsa.pr2.AbstractThesisService;
+import sk.stuba.fei.uim.vsa.pr2.BCryptService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -17,12 +18,13 @@ public class ThesisService extends AbstractThesisService<Student, Teacher, Thesi
     }
 
     @Override
-    public Student createStudent(Long aisId, String name, String email) {
-        log.info("Creating student with AIS ID " + aisId);
+    public Student createStudent(Long aisId, String name, String email, String password) {
+        String hashedPassword = BCryptService.hash(password);
         return create(() -> Student.builder()
                 .aisId(aisId)
                 .name(name)
                 .email(email)
+                .password(hashedPassword)
                 .build());
     }
 
@@ -47,6 +49,29 @@ public class ThesisService extends AbstractThesisService<Student, Teacher, Thesi
         return findByNamedQuery(Student.FIND_ALL_QUERY, Student.class, Collections.emptyMap());
     }
 
+    public Student findStudentByEmailAndPassword(String email, String password) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("email", email);
+        parameters.put("password", password);
+        List<Student> students = findByNamedQuery("findStudentsByEmailAndPassword", Student.class, parameters);
+        if(students.isEmpty()){
+            return null;
+        }
+        return students.get(0);
+
+    }
+
+    public Teacher findTeacherByEmailAndPassword(String email, String password) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("email", email);
+        parameters.put("password", password);
+        List<Teacher> teachers = findByNamedQuery("findTeachersByEmailAndPassword", Teacher.class, parameters);
+        if(teachers.isEmpty()){
+            return null;
+        }
+        return teachers.get(0);
+    }
+
     @Override
     public Student deleteStudent(Long id) {
         if (id == null)
@@ -62,12 +87,14 @@ public class ThesisService extends AbstractThesisService<Student, Teacher, Thesi
     }
 
     @Override
-    public Teacher createTeacher(Long aisId, String name, String email, String department) {
+    public Teacher createTeacher(Long aisId, String name, String email, String department, String password){
+        String hashedPassword = BCryptService.hash(password); // hash the password
         return create(() -> Teacher.builder()
                 .aisId(aisId)
                 .name(name)
                 .email(email)
                 .department(department)
+                .password(hashedPassword)
                 .institute(department)
                 .build());
     }

@@ -51,10 +51,12 @@ public class SanityCheckTest {
             assertTrue(server.isStarted());
             log.info("Requesting for generated WADL definition on " + BASE_URI + "/application.wadl");
             String content = client.path("application.wadl").request().get(String.class);
+            System.out.println(content.toString());
             assertNotNull(content);
             assertTrue(content.contains("<application xmlns=\"http://wadl.dev.java.net/2009/02\">"));
             assertTrue(content.contains("<resources base=\"http://localhost:8080/api/\">"));
         } catch (Exception e) {
+
             fail(e);
         }
     }

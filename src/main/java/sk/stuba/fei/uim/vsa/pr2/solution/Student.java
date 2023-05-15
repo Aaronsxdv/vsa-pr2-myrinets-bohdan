@@ -12,6 +12,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "STUDENT")
+@NamedQuery(
+        name = "findStudentsByEmailAndPassword",
+        query = "SELECT s FROM Student s WHERE s.email = :email AND s.password = :password"
+)
 @NamedQuery(name = Student.FIND_ALL_QUERY, query = "select s from Student s")
 public class Student implements Serializable {
     private static final long serialVersionUID = -8905656348104328114L;
@@ -33,6 +37,8 @@ public class Student implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "author")
     private Thesis thesis;
+
+    private String password;
 
     public Student() {
     }

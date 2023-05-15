@@ -5,15 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.reflections.scanners.Scanners.TypesAnnotated;
 
-@ApplicationPath("api")
+@ApplicationPath("api/")
 public class JAXRSApplicationConfiguration extends Application {
 
     public static final Logger log = LoggerFactory.getLogger(JAXRSApplicationConfiguration.class);
@@ -28,6 +30,7 @@ public class JAXRSApplicationConfiguration extends Application {
         Set<Class<?>> providers = reflections.get(TypesAnnotated.with(Provider.class).asClass());
         log.info("Registered feature providers: " + providers.toString());
         classes.addAll(providers);
+        classes.add(BasicAuthRequestFilter.class);
     }
 
     @Override
